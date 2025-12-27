@@ -2,19 +2,28 @@
 name = "dohl"
 version = "0.0.1"
 edition = "2024"
-description = "SIMD optimized 64-bit hash lib built on WyHash."
+description = "A low-latency, SIMD-oriented, non-cryptographic hasher, optimized for short bufs."
 license = "Apache-2.0"
 repository = "https://github.com/frozen-lab/dohl"
 readme = "README.md"
-keywords = ["hash", "hasher", "xxhash3", "entropy"]
-categories = ["algorithms"]
+keywords = ["hash", "hasher","no-std", "highwayhash"]
+categories = ["algorithms", "no-std"]
 exclude = ["shell.nix"]
 
-[profile.bench]
-lto = "fat"
+[profile.release]
 codegen-units = 1
-opt-level = "z"
-strip = "symbols"
+lto = "fat"
+incremental = false
+opt-level = 3
+
+[profile.bench]
+codegen-units = 1
+lto = "fat"
+incremental = false
+opt-level = 3
+debug = true
+debug-assertions = false
+strip = false
 
 [profile.profile]
 inherits = "release"
@@ -26,3 +35,11 @@ debug-assertions = false
 overflow-checks = false
 strip = "none"
 
+[workspace.lints.rust]
+unused_must_use = "deny"
+missing_docs    = "deny"
+
+[workspace.lints.clippy]
+unwrap_used     = "deny"
+expect_used     = "deny"
+panic           = "deny"

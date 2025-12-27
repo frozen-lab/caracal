@@ -1,9 +1,2 @@
-# builds
-**/__pycache__/
-**/target/
-
-# perf
+/target/
 **/perf.*
-
-# local
-**/.local/
